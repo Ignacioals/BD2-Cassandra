@@ -1,0 +1,191 @@
+create KEYSPACE tp_cassandra WITH replication =  {'class':
+'SimpleStrategy', 'replication_factor': '1' };
+
+USE tp_cassandra;
+
+
+# Creacion de las tables
+
+CREATE TABLE tabla1(
+	id_usuario int,
+	nombre_usuario text,
+	apellido_usuario text,
+	email_usuario text,
+	password_usuario text,
+	id_banda int,
+	nombre_banda text,
+	apellido_banda text,
+	PRIMARY KEY (id_usuario, id_banda, nombre_banda, apellido_banda)
+);
+
+CREATE TABLE tabla234(
+	id_autor_letra int,
+	nombre_autor_letra text,
+	apellido_autor_letra text,
+	id_cancion int,
+	nombre_cancion text,
+	letra_cancion text,
+	id_autor_musica int,
+	nombre_autor_musica text,
+	apellido_autor_musica text,
+	id_interprete_cancion int,
+	nombre_banda text,
+	apellido_banda text,
+	PRIMARY KEY ((id_autor_letra, id_autor_musica), id_cancion, nombre_cancion, id_interprete_cancion)
+);
+
+CREATE TABLE tabla578(
+	id_discografica int,
+	nombre_discografica text,
+	id_cancion int,
+	nombre_cancion text,
+	id_album int, 
+	nombre_album text,
+	ano_album int,
+	portada_album blob,
+	PRIMARY KEY ((id_discografica, id_album), nombre_discografica, nombre_album, id_cancion, nombre_cancion)
+);
+
+
+ Create type tp_cassandra.cancion(id_cancion int,nombre_cancion text);
+
+CREATE TABLE tabla6(
+	id_album int,
+	nombre_album text,
+	id_autor_resena int,
+	nombre_autor_resena text,
+	apellido_autor_resena text,
+	id_resena int,
+	texto_resena text,
+	fecha_resena timestamp,
+	id_canciones LIST<int>,	
+	PRIMARY KEY (id_album, nombre_album, id_resena, id_autor_resena)
+);
+
+CREATE INDEX busquedacancion ON tabla6(id_canciones);
+
+# Insercion de datos
+#tabla1
+
+BEGIN BATCH
+	INSERT INTO tp_cassandra.tabla1(id_usuario, nombre_usuario, apellido_usuario, email_usuario, password_usuario, id_banda, nombre_banda, apellido_banda ) VALUES (2, 'Nacho', 'Lopez', 'nachol@gmail.com', 'basedd2', 2, '', 'Metallica');
+	INSERT INTO tp_cassandra.tabla1(id_usuario, nombre_usuario, apellido_usuario, email_usuario, password_usuario, id_banda, nombre_banda, apellido_banda ) VALUES (2, 'Nacho', 'Lopez', 'nachol@gmail.com', 'basedd2', 1, '','Megadeth');
+	INSERT INTO tp_cassandra.tabla1(id_usuario, nombre_usuario, apellido_usuario, email_usuario, password_usuario, id_banda, nombre_banda, apellido_banda ) VALUES (2, 'Nacho', 'Lopez', 'nachol@gmail.com', 'basedd2', 9, 'Ozzy','Osbourne');
+	INSERT INTO tp_cassandra.tabla1(id_usuario, nombre_usuario, apellido_usuario, email_usuario, password_usuario, id_banda, nombre_banda, apellido_banda ) VALUES (1, 'Lucas', 'Ponzio', 'lucaspon@gmail.com', '12321', 9, 'Ozzy','Osbourne');
+	INSERT INTO tp_cassandra.tabla1(id_usuario, nombre_usuario, apellido_usuario, email_usuario, password_usuario, id_banda, nombre_banda, apellido_banda ) VALUES (1, 'Lucas', 'Ponzio', 'lucaspon@gmail.com', '12321', 6, 'Cristina','Aguilera');
+	INSERT INTO tp_cassandra.tabla1(id_usuario, nombre_usuario, apellido_usuario, email_usuario, password_usuario, id_banda, nombre_banda, apellido_banda ) VALUES (1, 'Lucas', 'Ponzio', 'lucaspon@gmail.com', '12321', 3, 'Brennan','Heart');
+	INSERT INTO tp_cassandra.tabla1(id_usuario, nombre_usuario, apellido_usuario, email_usuario, password_usuario, id_banda, nombre_banda, apellido_banda ) VALUES (3, 'Micaela', 'Escorbuto', 'mies@gmail.com', 'colora', 9, 'Ozzy','Osbourne');
+	INSERT INTO tp_cassandra.tabla1(id_usuario, nombre_usuario, apellido_usuario, email_usuario, password_usuario, id_banda, nombre_banda, apellido_banda ) VALUES (3, 'Micaela', 'Escorbuto', 'mies@gmail.com', 'colora', 7, 'Black','Sabbath');
+	INSERT INTO tp_cassandra.tabla1(id_usuario, nombre_usuario, apellido_usuario, email_usuario, password_usuario, id_banda, nombre_banda, apellido_banda ) VALUES (4, 'Marcos', 'Dolan', 'mardon@yahoo.com', 'abuelaCristina', 1, '','Megadeth');
+	INSERT INTO tp_cassandra.tabla1(id_usuario, nombre_usuario, apellido_usuario, email_usuario, password_usuario, id_banda, nombre_banda, apellido_banda ) VALUES (4, 'Marcos', 'Dolan', 'mardon@yahoo.com', 'abuelaCristina', 2, '', 'Metallica');
+	INSERT INTO tp_cassandra.tabla1(id_usuario, nombre_usuario, apellido_usuario, email_usuario, password_usuario, id_banda, nombre_banda, apellido_banda ) VALUES (4, 'Marcos', 'Dolan', 'mardon@yahoo.com', 'abuelaCristina', 9, 'Ozzy','Osbourne');
+	INSERT INTO tp_cassandra.tabla1(id_usuario, nombre_usuario, apellido_usuario, email_usuario, password_usuario, id_banda, nombre_banda, apellido_banda ) VALUES (5, 'Agustin', 'Richards', 'arich@mail.com', 'paleolitico', 9, 'Ozzy','Osbourne');
+	INSERT INTO tp_cassandra.tabla1(id_usuario, nombre_usuario, apellido_usuario, email_usuario, password_usuario, id_banda, nombre_banda, apellido_banda ) VALUES (5, 'Agustin', 'Richards', 'arich@mail.com', 'paleolitico', 4, '','Testament');
+	INSERT INTO tp_cassandra.tabla1(id_usuario, nombre_usuario, apellido_usuario, email_usuario, password_usuario, id_banda, nombre_banda, apellido_banda ) VALUES (5, 'Agustin', 'Richards', 'arich@mail.com', 'paleolitico', 5, '','Dio');
+	INSERT INTO tp_cassandra.tabla1(id_usuario, nombre_usuario, apellido_usuario, email_usuario, password_usuario, id_banda, nombre_banda, apellido_banda ) VALUES (6, 'Alex', 'Mortiz', 'Alex@mail.com', 'contrmort', 9, 'Ozzy','Osbourne');
+	INSERT INTO tp_cassandra.tabla1(id_usuario, nombre_usuario, apellido_usuario, email_usuario, password_usuario, id_banda, nombre_banda, apellido_banda ) VALUES (6, 'Alex', 'Mortiz', 'Alex@mail.com', 'contrmort', 3, 'Brennan','Heart');
+	INSERT INTO tp_cassandra.tabla1(id_usuario, nombre_usuario, apellido_usuario, email_usuario, password_usuario, id_banda, nombre_banda, apellido_banda ) VALUES (6, 'Alex', 'Mortiz', 'Alex@mail.com', 'contrmort', 6, 'Cristina','Aguilera');
+	INSERT INTO tp_cassandra.tabla1(id_usuario, nombre_usuario, apellido_usuario, email_usuario, password_usuario, id_banda, nombre_banda, apellido_banda ) VALUES (7, 'Luna', 'Hammett', 'lh@mail.com', 'porotos', 3, 'Brennan','Heart');
+	INSERT INTO tp_cassandra.tabla1(id_usuario, nombre_usuario, apellido_usuario, email_usuario, password_usuario, id_banda, nombre_banda, apellido_banda ) VALUES (7, 'Luna', 'Hammett', 'lh@mail.com', 'porotos', 2, '', 'Metallica');
+	INSERT INTO tp_cassandra.tabla1(id_usuario, nombre_usuario, apellido_usuario, email_usuario, password_usuario, id_banda, nombre_banda, apellido_banda ) VALUES (8, 'Berta', 'Salares', 'bert@mail.com', 'locura', 5, '','Dio');
+	INSERT INTO tp_cassandra.tabla1(id_usuario, nombre_usuario, apellido_usuario, email_usuario, password_usuario, id_banda, nombre_banda, apellido_banda ) VALUES (8, 'Berta', 'Salares', 'bert@mail.com', 'locura', 9, 'Ozzy','Osbourne');
+	INSERT INTO tp_cassandra.tabla1(id_usuario, nombre_usuario, apellido_usuario, email_usuario, password_usuario, id_banda, nombre_banda, apellido_banda ) VALUES (9, 'Tomas', 'Mrtinez', 'Mrtinez@mail.com', 'machiavelo', 7, 'Black','Sabbath');
+	INSERT INTO tp_cassandra.tabla1(id_usuario, nombre_usuario, apellido_usuario, email_usuario, password_usuario, id_banda, nombre_banda, apellido_banda ) VALUES (9, 'Tomas', 'Mrtinez', 'Mrtinez@mail.com', 'machiavelo', 1, '','Megadeth');
+	INSERT INTO tp_cassandra.tabla1(id_usuario, nombre_usuario, apellido_usuario, email_usuario, password_usuario, id_banda, nombre_banda, apellido_banda ) VALUES (10, 'Cristina', 'Kirchbd', 'Cristina@mail.com', 'venezuela', 9, 'Ozzy','Osbourne');
+	INSERT INTO tp_cassandra.tabla1(id_usuario, nombre_usuario, apellido_usuario, email_usuario, password_usuario, id_banda, nombre_banda, apellido_banda ) VALUES (10, 'Cristina', 'Kirchbd', 'Cristina@mail.com', 'venezuela',  5, '','Dio');
+APPLY BATCH;
+
+#tabla234
+BEGIN BATCH
+	INSERT INTO tp_cassandra.tabla234(id_autor_letra, nombre_autor_letra, apellido_autor_letra, id_cancion, nombre_cancion, letra_cancion, id_autor_musica, nombre_autor_musica, apellido_autor_musica, id_interprete_cancion, nombre_banda, apellido_banda) VALUES (10,'James','Hetfield', 1, 'Master of Puppets','Master of Puppets im pulling your strings!',12,'Kirk','Hammett',2,'','Metallica');
+	INSERT INTO tp_cassandra.tabla234(id_autor_letra, nombre_autor_letra, apellido_autor_letra, id_cancion, nombre_cancion, letra_cancion, id_autor_musica, nombre_autor_musica, apellido_autor_musica, id_interprete_cancion, nombre_banda, apellido_banda) VALUES (10,'James','Hetfield', 2, 'Orion','Instrumental',10,'Cliff','Burton',2,'','Metallica');
+	INSERT INTO tp_cassandra.tabla234(id_autor_letra, nombre_autor_letra, apellido_autor_letra, id_cancion, nombre_cancion, letra_cancion, id_autor_musica, nombre_autor_musica, apellido_autor_musica, id_interprete_cancion, nombre_banda, apellido_banda) VALUES (10,'James','Hetfield', 3, 'For Whom The Bell Tolls','For Whom The Bell Tolls, time is running...',12,'Kirk','Hammett',2,'','Metallica');
+	INSERT INTO tp_cassandra.tabla234(id_autor_letra, nombre_autor_letra, apellido_autor_letra, id_cancion, nombre_cancion, letra_cancion, id_autor_musica, nombre_autor_musica, apellido_autor_musica, id_interprete_cancion, nombre_banda, apellido_banda) VALUES (10,'James','Hetfield', 4, 'Battery','We need the battery!',12,'Kirk','Hammett',2,'','Metallica');
+	INSERT INTO tp_cassandra.tabla234(id_autor_letra, nombre_autor_letra, apellido_autor_letra, id_cancion, nombre_cancion, letra_cancion, id_autor_musica, nombre_autor_musica, apellido_autor_musica, id_interprete_cancion, nombre_banda, apellido_banda) VALUES (10,'James','Hetfield', 5, 'Welcome Home','Welcome Home Sanitarium',10,'James','Hetfield',2,'','Metallica');
+	INSERT INTO tp_cassandra.tabla234(id_autor_letra, nombre_autor_letra, apellido_autor_letra, id_cancion, nombre_cancion, letra_cancion, id_autor_musica, nombre_autor_musica, apellido_autor_musica, id_interprete_cancion, nombre_banda, apellido_banda) VALUES (8,'Dave','Mustane', 6, 'Holy Wars','And the punishment due',8,'Dave','Mustane',1,'','Megadeth');
+	INSERT INTO tp_cassandra.tabla234(id_autor_letra, nombre_autor_letra, apellido_autor_letra, id_cancion, nombre_cancion, letra_cancion, id_autor_musica, nombre_autor_musica, apellido_autor_musica, id_interprete_cancion, nombre_banda, apellido_banda) VALUES (8,'Dave','Mustane', 7, 'Take no Prisioners','Take. no. Prisioners!',8,'Dave','Mustane',1,'','Megadeth');
+	INSERT INTO tp_cassandra.tabla234(id_autor_letra, nombre_autor_letra, apellido_autor_letra, id_cancion, nombre_cancion, letra_cancion, id_autor_musica, nombre_autor_musica, apellido_autor_musica, id_interprete_cancion, nombre_banda, apellido_banda) VALUES (8,'Dave','Mustane', 8, 'Dawn Patrol','And the sanity they lose...',11,'Marty','Friedman',1,'','Megadeth');
+	INSERT INTO tp_cassandra.tabla234(id_autor_letra, nombre_autor_letra, apellido_autor_letra, id_cancion, nombre_cancion, letra_cancion, id_autor_musica, nombre_autor_musica, apellido_autor_musica, id_interprete_cancion, nombre_banda, apellido_banda) VALUES (8,'Dave','Mustane', 9, 'Symphony of Destruction','Dancing to the symphony...',8,'Dave','Mustane',1,'','Megadeth');
+	INSERT INTO tp_cassandra.tabla234(id_autor_letra, nombre_autor_letra, apellido_autor_letra, id_cancion, nombre_cancion, letra_cancion, id_autor_musica, nombre_autor_musica, apellido_autor_musica, id_interprete_cancion, nombre_banda, apellido_banda) VALUES (11,'Marty','Friedman', 10, 'Peace Sells','But who is buying?',8,'Dave','Mustane',1,'','Megadeth');
+	INSERT INTO tp_cassandra.tabla234(id_autor_letra, nombre_autor_letra, apellido_autor_letra, id_cancion, nombre_cancion, letra_cancion, id_autor_musica, nombre_autor_musica, apellido_autor_musica, id_interprete_cancion, nombre_banda, apellido_banda) VALUES (8,'Dave','Mustane',11, 'Dystopia','As you only want to live...',8,'Dave','Mustane',1,'','Megadeth');
+	INSERT INTO tp_cassandra.tabla234(id_autor_letra, nombre_autor_letra, apellido_autor_letra, id_cancion, nombre_cancion, letra_cancion, id_autor_musica, nombre_autor_musica, apellido_autor_musica, id_interprete_cancion, nombre_banda, apellido_banda) VALUES (3,'Brennan','Heart',12, 'Imaginary','Instrumental',3,'Brennan','Heart',3,'Brennan','Heart');
+	INSERT INTO tp_cassandra.tabla234(id_autor_letra, nombre_autor_letra, apellido_autor_letra, id_cancion, nombre_cancion, letra_cancion, id_autor_musica, nombre_autor_musica, apellido_autor_musica, id_interprete_cancion, nombre_banda, apellido_banda) VALUES (3,'Brennan','Heart',13, 'Losing my mind','Instrumental',3,'Brennan','Heart',3,'Brennan','Heart');
+APPLY BATCH;
+BEGIN BATCH
+	INSERT INTO tp_cassandra.tabla234(id_autor_letra, nombre_autor_letra, apellido_autor_letra, id_cancion, nombre_cancion, letra_cancion, id_autor_musica, nombre_autor_musica, apellido_autor_musica, id_interprete_cancion, nombre_banda, apellido_banda) VALUES (7,'Black','Sabbath',12, 'Heaven and hell','Its heaven and hell!',13,'Tommy','Lee',7,'Black','Sabbath');
+	INSERT INTO tp_cassandra.tabla234(id_autor_letra, nombre_autor_letra, apellido_autor_letra, id_cancion, nombre_cancion, letra_cancion, id_autor_musica, nombre_autor_musica, apellido_autor_musica, id_interprete_cancion, nombre_banda, apellido_banda) VALUES (7,'Black','Sabbath',15, 'War pigs','War pigs at the power.',13,'Tommy','Lee',7,'Black','Sabbath');
+	INSERT INTO tp_cassandra.tabla234(id_autor_letra, nombre_autor_letra, apellido_autor_letra, id_cancion, nombre_cancion, letra_cancion, id_autor_musica, nombre_autor_musica, apellido_autor_musica, id_interprete_cancion, nombre_banda, apellido_banda) VALUES (4,'','Testament',16, 'Return to serenity','I return to serenity',13,'Tommy','Lee',4,'','Testament');
+	INSERT INTO tp_cassandra.tabla234(id_autor_letra, nombre_autor_letra, apellido_autor_letra, id_cancion, nombre_cancion, letra_cancion, id_autor_musica, nombre_autor_musica, apellido_autor_musica, id_interprete_cancion, nombre_banda, apellido_banda) VALUES (4,'','Testament',17, 'Souls of black','Look at the lost souls',13,'Tommy','Lee',4,'','Testament');
+	INSERT INTO tp_cassandra.tabla234(id_autor_letra, nombre_autor_letra, apellido_autor_letra, id_cancion, nombre_cancion, letra_cancion, id_autor_musica, nombre_autor_musica, apellido_autor_musica, id_interprete_cancion, nombre_banda, apellido_banda) VALUES (5,'','Dio',18, 'Holy Diver','Holy Diver, its been..',5,'','Dio',5,'','Dio');
+	INSERT INTO tp_cassandra.tabla234(id_autor_letra, nombre_autor_letra, apellido_autor_letra, id_cancion, nombre_cancion, letra_cancion, id_autor_musica, nombre_autor_musica, apellido_autor_musica, id_interprete_cancion, nombre_banda, apellido_banda) VALUES (5,'','Dio',19, 'Rainbow in the dark','Just another rainbow...',5,'','Dio',5,'','Dio');
+	INSERT INTO tp_cassandra.tabla234(id_autor_letra, nombre_autor_letra, apellido_autor_letra, id_cancion, nombre_cancion, letra_cancion, id_autor_musica, nombre_autor_musica, apellido_autor_musica, id_interprete_cancion, nombre_banda, apellido_banda) VALUES (12,'Cristina','Aguilera',20, 'Beautiful','Stripped',12,'Cristina','Aguilera',6,'Cristina','Aguilera');
+	INSERT INTO tp_cassandra.tabla234(id_autor_letra, nombre_autor_letra, apellido_autor_letra, id_cancion, nombre_cancion, letra_cancion, id_autor_musica, nombre_autor_musica, apellido_autor_musica, id_interprete_cancion, nombre_banda, apellido_banda) VALUES (12,'Cristina','Aguilera',21, 'Genie in a bottle','im a Genie in a bottle',12,'Cristina','Aguilera',6,'Cristina','Aguilera');
+	INSERT INTO tp_cassandra.tabla234(id_autor_letra, nombre_autor_letra, apellido_autor_letra, id_cancion, nombre_cancion, letra_cancion, id_autor_musica, nombre_autor_musica, apellido_autor_musica, id_interprete_cancion, nombre_banda, apellido_banda) VALUES (9,'Ozzy','Osbourne',22, 'Bark at the moon','oh yeah, bark at the moon...',9,'Ozzy','Osbourne',9,'Ozzy','Osbourne');
+	INSERT INTO tp_cassandra.tabla234(id_autor_letra, nombre_autor_letra, apellido_autor_letra, id_cancion, nombre_cancion, letra_cancion, id_autor_musica, nombre_autor_musica, apellido_autor_musica, id_interprete_cancion, nombre_banda, apellido_banda) VALUES (9,'Ozzy','Osbourne',23, 'Crazy train','Im running off the rails...',9,'Ozzy','Osbourne',9,'Ozzy','Osbourne');
+	INSERT INTO tp_cassandra.tabla234(id_autor_letra, nombre_autor_letra, apellido_autor_letra, id_cancion, nombre_cancion, letra_cancion, id_autor_musica, nombre_autor_musica, apellido_autor_musica, id_interprete_cancion, nombre_banda, apellido_banda) VALUES (9,'Ozzy','Osbourne',24, 'Bark at the moon','oh yeah, bark at the moon...',9,'Ozzy','Osbourne',6,'Cristina','Aguilera');
+APPLY BATCH;
+
+CREATE TABLE tablaMetod4(
+	id_banda int,
+	cant_canciones counter,
+	PRIMARY KEY (id_banda)
+);
+
+
+	UPDATE tp_cassandra.tablaMetod4 SET cant_canciones=cant_canciones+6 where id_banda = 1;
+	UPDATE tp_cassandra.tablaMetod4 SET cant_canciones=cant_canciones+5 where id_banda = 2;
+	UPDATE tp_cassandra.tablaMetod4 SET cant_canciones=cant_canciones+2 where id_banda = 3;
+	UPDATE tp_cassandra.tablaMetod4 SET cant_canciones=cant_canciones+2 where id_banda = 4;
+	UPDATE tp_cassandra.tablaMetod4 SET cant_canciones=cant_canciones+2 where id_banda = 5;
+	UPDATE tp_cassandra.tablaMetod4 SET cant_canciones=cant_canciones+3 where id_banda = 6;
+	UPDATE tp_cassandra.tablaMetod4 SET cant_canciones=cant_canciones+2 where id_banda = 7;
+	UPDATE tp_cassandra.tablaMetod4 SET cant_canciones=cant_canciones+2 where id_banda = 9;
+
+
+
+#tabla578
+BEGIN BATCH
+	INSERT INTO tp_cassandra.tabla578(id_discografica,id_album,nombre_discografica,  nombre_album, ano_album, id_cancion,  nombre_cancion) VALUES (1,1, 'Sony Music',  'Master of Puppets', 1982,1, 'Master of Puppets');
+	INSERT INTO tp_cassandra.tabla578(id_discografica,id_album,nombre_discografica,  nombre_album, ano_album, id_cancion,  nombre_cancion) VALUES (1, 1, 'Sony Music', 'Master of Puppets', 1982,2, 'Orion');
+	INSERT INTO tp_cassandra.tabla578(id_discografica,id_album,nombre_discografica,  nombre_album, ano_album, id_cancion,  nombre_cancion) VALUES (1, 1, 'Sony Music', 'Master of Puppets', 1982,3, 'For Whom The Bell Tolls');
+	INSERT INTO tp_cassandra.tabla578(id_discografica,id_album,nombre_discografica,  nombre_album, ano_album, id_cancion,  nombre_cancion) VALUES (1, 1,'Sony Music',  'Master of Puppets', 1982,4, 'Battery');
+	INSERT INTO tp_cassandra.tabla578(id_discografica,id_album,nombre_discografica,  nombre_album, ano_album, id_cancion,  nombre_cancion) VALUES (1,1, 'Sony Music',  'Master of Puppets', 1982,5, 'Welcome Home');
+	INSERT INTO tp_cassandra.tabla578(id_discografica,id_album,nombre_discografica,  nombre_album, ano_album, id_cancion,  nombre_cancion) VALUES (1, 2, 'Sony Music', 'Symphony of Destruction', 1985,9, 'Symphony of Destruction');
+	INSERT INTO tp_cassandra.tabla578(id_discografica,id_album,nombre_discografica,  nombre_album, ano_album, id_cancion,  nombre_cancion) VALUES (1,  2,'Sony Music', 'Symphony of Destruction', 1985,7, 'Take no Prisioners');
+	INSERT INTO tp_cassandra.tabla578(id_discografica,id_album,nombre_discografica,  nombre_album, ano_album, id_cancion,  nombre_cancion) VALUES (1, 3,'Sony Music',  'Rust in peace', 1986,6, 'Holy Wars');
+	INSERT INTO tp_cassandra.tabla578(id_discografica,id_album,nombre_discografica,  nombre_album, ano_album, id_cancion,  nombre_cancion) VALUES (1, 3,'Sony Music',  'Rust in peace', 1986,11, 'Dystopia');
+	INSERT INTO tp_cassandra.tabla578(id_discografica,id_album,nombre_discografica,  nombre_album, ano_album, id_cancion,  nombre_cancion) VALUES (1, 4,'Sony Music',  'Peace Sells', 2001,8, 'Dawn Patrol');
+	INSERT INTO tp_cassandra.tabla578(id_discografica,id_album,nombre_discografica,  nombre_album, ano_album, id_cancion,  nombre_cancion) VALUES (1, 4, 'Sony Music', 'Peace Sells', 2001,10, 'Peace Sells');
+	INSERT INTO tp_cassandra.tabla578(id_discografica,id_album,nombre_discografica,  nombre_album, ano_album, id_cancion,  nombre_cancion) VALUES (1,5, 'Sony Music','Divide',2016,12, 'Imaginary');
+	INSERT INTO tp_cassandra.tabla578(id_discografica,id_album,nombre_discografica,  nombre_album, ano_album, id_cancion,  nombre_cancion) VALUES (1,5, 'Sony Music','Divide',2016, 13, 'Losing my mind');
+	INSERT INTO tp_cassandra.tabla578(id_discografica,id_album,nombre_discografica,  nombre_album, ano_album, id_cancion,  nombre_cancion) VALUES (2,6, 'Universal',  'Heaven and hell',1988, 12, 'Heaven and hell');
+	INSERT INTO tp_cassandra.tabla578(id_discografica,id_album,nombre_discografica,  nombre_album, ano_album, id_cancion,  nombre_cancion) VALUES (2,6, 'Universal',  'Heaven and hell',1988, 15, 'War pigs');
+	INSERT INTO tp_cassandra.tabla578(id_discografica,id_album,nombre_discografica,  nombre_album, ano_album, id_cancion,  nombre_cancion) VALUES (2, 7, 'Universal', 'Testament',1988, 16, 'Return to serenity');
+	INSERT INTO tp_cassandra.tabla578(id_discografica,id_album,nombre_discografica,  nombre_album, ano_album, id_cancion,  nombre_cancion) VALUES (2, 7, 'Universal', 'Testament',1988, 17, 'Souls of black');
+	INSERT INTO tp_cassandra.tabla578(id_discografica,id_album,nombre_discografica,  nombre_album, ano_album, id_cancion,  nombre_cancion) VALUES (2,8, 'Universal',  'Rainbow in the dark',1980, 18, 'Holy Diver');
+	INSERT INTO tp_cassandra.tabla578(id_discografica,id_album,nombre_discografica,  nombre_album, ano_album, id_cancion,  nombre_cancion) VALUES (2,8, 'Universal',  'Rainbow in the dark',1980, 19, 'Rainbow in the dark');
+	INSERT INTO tp_cassandra.tabla578(id_discografica,id_album,nombre_discografica,  nombre_album, ano_album, id_cancion,  nombre_cancion) VALUES (2,  9,'Universal', 'Beautiful',1995, 20, 'Beautiful');
+	INSERT INTO tp_cassandra.tabla578(id_discografica,id_album,nombre_discografica,  nombre_album, ano_album, id_cancion,  nombre_cancion) VALUES (2, 9, 'Universal', 'Beautiful', 1995,21, 'Genie in a bottle');
+	INSERT INTO tp_cassandra.tabla578(id_discografica,id_album,nombre_discografica,  nombre_album, ano_album, id_cancion,  nombre_cancion) VALUES (2, 9, 'Universal', 'Beautiful',1995, 24, 'Bark at the moon');
+	INSERT INTO tp_cassandra.tabla578(id_discografica,id_album,nombre_discografica,  nombre_album, ano_album, id_cancion,  nombre_cancion) VALUES (2, 10, 'Universal', 'Bark at The moon',1995, 22, 'Crazy train');
+	INSERT INTO tp_cassandra.tabla578(id_discografica,id_album,nombre_discografica,  nombre_album, ano_album, id_cancion,  nombre_cancion) VALUES (2, 10, 'Universal',  'Bark at The moon',1995, 23, 'Bark at the moon');
+APPLY BATCH;
+
+#tabla6
+BEGIN BATCH
+	INSERT INTO tp_cassandra.tabla6(id_album, nombre_album, id_autor_resena, nombre_autor_resena, apellido_autor_resena, id_resena,texto_resena,fecha_resena,id_canciones) VALUES (1, 'Master of Puppets',2,'Nacho', 'Lopez', 1, 'Buenardo','2019-11-26 00:00:00',[1,2,3,4,5]);
+	INSERT INTO tp_cassandra.tabla6(id_album, nombre_album, id_autor_resena, nombre_autor_resena, apellido_autor_resena, id_resena,texto_resena,fecha_resena,id_canciones) VALUES (1, 'Master of Puppets',7,'Luna', 'Hammett', 2, 'mejor album de metallica','2019-11-20 00:00:00',[1,2,3,4,5]);
+	INSERT INTO tp_cassandra.tabla6(id_album, nombre_album, id_autor_resena, nombre_autor_resena, apellido_autor_resena, id_resena,texto_resena,fecha_resena,id_canciones) VALUES (2, 'Symphony of Destruction',1,'Lucas', 'Ponzio', 3, 'Dave Mustane es un genio','2019-11-18 00:00:00',[9,7]);
+	INSERT INTO tp_cassandra.tabla6(id_album, nombre_album, id_autor_resena, nombre_autor_resena, apellido_autor_resena, id_resena,texto_resena,fecha_resena,id_canciones) VALUES (3, 'Rust in peace',4,'Marcos', 'Dolan', 4, 'Peace sells es mejor.','2019-11-24 00:00:00',[6,11]);
+	INSERT INTO tp_cassandra.tabla6(id_album, nombre_album, id_autor_resena, nombre_autor_resena, apellido_autor_resena, id_resena,texto_resena,fecha_resena,id_canciones) VALUES (3, 'Rust in peace',3,'Lucas', 'Ponzio', 5, 'Para escuchar a maximo volumen','2019-11-04 00:00:00',[6,11]);
+	INSERT INTO tp_cassandra.tabla6(id_album, nombre_album, id_autor_resena, nombre_autor_resena, apellido_autor_resena, id_resena,texto_resena,fecha_resena,id_canciones) VALUES (4, 'Peace Sells',5,'Agustin', 'Coste', 6, 'La version remasterizadda es mejor','2019-11-06 00:00:00',[8,10]);
+	INSERT INTO tp_cassandra.tabla6(id_album, nombre_album, id_autor_resena, nombre_autor_resena, apellido_autor_resena, id_resena,texto_resena,fecha_resena,id_canciones) VALUES (5, 'Divide',6,'Alex', 'Mortiz', 7, 'Me re ceba el tema','2019-11-06 00:00:00',[12,13]);
+	INSERT INTO tp_cassandra.tabla6(id_album, nombre_album, id_autor_resena, nombre_autor_resena, apellido_autor_resena, id_resena,texto_resena,fecha_resena,id_canciones) VALUES (5, 'Divide',8,'Berta', 'Salares', 8, 'Unico!','2019-11-07 00:00:00',[12,13]);
+	INSERT INTO tp_cassandra.tabla6(id_album, nombre_album, id_autor_resena, nombre_autor_resena, apellido_autor_resena, id_resena,texto_resena,fecha_resena,id_canciones) VALUES (6, 'Heaven and hell',6,'Alex', 'Mortiz', 9, 'Dio volve!','2019-11-07 00:00:00',[12,15]);
+	INSERT INTO tp_cassandra.tabla6(id_album, nombre_album, id_autor_resena, nombre_autor_resena, apellido_autor_resena, id_resena,texto_resena,fecha_resena,id_canciones) VALUES (6, 'Heaven and hell',2,'Nacho', 'Lopez', 10, 'Ozzy canta mejor que Dio','2019-11-07 00:00:00',[12,15]);
+	INSERT INTO tp_cassandra.tabla6(id_album, nombre_album, id_autor_resena, nombre_autor_resena, apellido_autor_resena, id_resena,texto_resena,fecha_resena,id_canciones) VALUES (7, 'Testament',8,'Berta', 'Salares', 11, 'Grandes de los ochenta','2019-11-08 00:00:00',[16,17]);
+	INSERT INTO tp_cassandra.tabla6(id_album, nombre_album, id_autor_resena, nombre_autor_resena, apellido_autor_resena, id_resena,texto_resena,fecha_resena,id_canciones) VALUES (7, 'Testament',5,'Agustin', 'Coste', 12, 'Me encanta','2019-11-09 00:00:00',[16,17]);
+	INSERT INTO tp_cassandra.tabla6(id_album, nombre_album, id_autor_resena, nombre_autor_resena, apellido_autor_resena, id_resena,texto_resena,fecha_resena,id_canciones) VALUES (8, 'Rainbow in the dark',9,'Tomas', 'Mrtinez', 13, 'Tremendooo','2019-11-10 00:00:00',[18,19]);
+	INSERT INTO tp_cassandra.tabla6(id_album, nombre_album, id_autor_resena, nombre_autor_resena, apellido_autor_resena, id_resena,texto_resena,fecha_resena,id_canciones) VALUES (9, 'Beautiful',10,'Cristina', 'Kirchbd', 12, 'mmmm no me gusto mucho','2019-11-11 00:00:00',[20,21,24]);
+	INSERT INTO tp_cassandra.tabla6(id_album, nombre_album, id_autor_resena, nombre_autor_resena, apellido_autor_resena, id_resena,texto_resena,fecha_resena,id_canciones) VALUES (10, 'Bark at The moon',7,'Luna', 'Hammett', 15, 'Osbourne la rompe','2019-11-11 00:00:00',[22,23]);
+APPLY BATCH;
